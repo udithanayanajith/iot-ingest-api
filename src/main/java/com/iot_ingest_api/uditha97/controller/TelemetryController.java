@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/telemetry")
 public class TelemetryController {
+
     private final TelemetryProducerService producerService;
     private final ObjectMapper mapper = new ObjectMapper();
 
