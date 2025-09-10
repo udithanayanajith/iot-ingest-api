@@ -3,10 +3,9 @@ spring:
     allow-circular-references: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password:
     username: root
+    password:
     url: jdbc:mysql://localhost:3306/iotdatabase?useSSL=true&requireSSL=false&createDatabaseIfNotExist=true
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -29,7 +28,28 @@ springdoc:
 kafka:
   bootstrap-servers: localhost:9092
   topic: telemetry
+  producer:
+    bootstrap-servers: localhost:9092
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    acks: all
+    retries: 3
+    batch-size: 16384
+    linger-ms: 5
+    buffer-memory: 33554432
+  properties:
+    max.request.size: 1048576
+    compression.type: snappy
 
 server:
   port: 8080
+  address: 0.0.0.0
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    prometheus:
+      enabled: true

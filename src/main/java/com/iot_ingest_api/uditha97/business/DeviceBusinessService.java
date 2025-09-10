@@ -2,7 +2,6 @@ package com.iot_ingest_api.uditha97.business;
 
 import com.iot_ingest_api.uditha97.model.Device;
 import com.iot_ingest_api.uditha97.repository.DeviceRepositoryTemplate;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -29,4 +28,7 @@ public class DeviceBusinessService {
         return deviceRepositoryTemplate.getDeviceByDeviceId(deviceId);
     }
 
+    public boolean getTelemetryByDeviceId(String deviceId) {
+        return deviceRepositoryTemplate.deviceExistsByDeviceId(deviceId);
+    }
 }
