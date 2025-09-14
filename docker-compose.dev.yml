@@ -1,54 +1,28 @@
-version: '3.8'
-
 services:
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.5.0
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-
-  kafka:
-    image: confluentinc/cp-kafka:7.5.0
-    depends_on:
-      - zookeeper
-    environment:
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    ports:
-      - "9092:9092"
-
-  schema-registry:
-    image: confluentinc/cp-schema-registry:7.5.0
-    depends_on:
-      - kafka
-    environment:
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:9092
-      SCHEMA_REGISTRY_HOST_NAME: schema-registry
-    ports:
-      - "8081:8081"
-
-  mysql:
-    image: mysql:8
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: iot
-    ports:
-      - "3306:3306"
-
   ingest:
-    build: ./iot-ingest-api
+    build: .
     container_name: ingest-api
     ports:
       - "8080:8080"
-    depends_on:
-      - kafka
-      - schema-registry
-
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:8092
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/iotdatabase
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD:
   consumer:
-    build: ./iot-consumer-worker
+    build: ../iot-consumer-worker
     container_name: consumer-worker
     ports:
       - "8081:8081"
-    depends_on:
-      - kafka
-      - mysql
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:8092
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/iotdatabase
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD:
+
+networks:
+  default:
+    external:
+      name: kafka_default
