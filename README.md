@@ -136,3 +136,5 @@ The service exposes metrics via Micrometer that can be scraped by Prometheus:
 *   Standard Spring Boot metrics (JVM, HTTP requests, etc.)
 
 **Note:** Ensure that Kafka and MySQL are running before starting the application.
+
+[Demo.pdf](Extra%20Things/Demo.pdf)
