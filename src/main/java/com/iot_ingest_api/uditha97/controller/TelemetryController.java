@@ -10,6 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * REST controller for telemetry ingestion operations.
+ * Handles bulk telemetry data reception and Kafka publishing.
+ */
 @Tag(name = "Telemetry", description = "Telemetry ingestion endpoints")
 @RestController
 @RequestMapping("/api/v1/telemetry")
@@ -25,7 +29,13 @@ public class TelemetryController {
         this.deviceBusinessService = deviceBusinessService;
     }
 
-
+    /**
+     * Endpoint for ingesting bulk telemetry data.
+     * Converts payload to JSON and publishes to Kafka asynchronously.
+     *
+     * @param payload the telemetry bulk DTO containing device ID and readings
+     * @return ResponseEntity with 202 Accepted or error response
+     */
     @Operation(summary = "Ingest telemetry (bulk)",
             description = "Accepts bulk telemetry payloads and publishes to Kafka asynchronously. Returns 202 Accepted.")
     @PostMapping

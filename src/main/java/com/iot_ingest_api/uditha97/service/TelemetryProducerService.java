@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Service for producing telemetry messages to Kafka.
+ * Handles asynchronous message sending and metrics collection.
+ */
 @Service
 public class TelemetryProducerService {
 
@@ -23,6 +27,13 @@ public class TelemetryProducerService {
         this.meterRegistry = meterRegistry;
     }
 
+    /**
+     * Sends telemetry data to Kafka asynchronously.
+     * Includes success/failure logging and Prometheus metrics collection.
+     *
+     * @param deviceId the device identifier for message key
+     * @param payload the telemetry data payload as JSON string
+     */
     public void send(String deviceId, String payload) {
         CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, deviceId, payload);
 

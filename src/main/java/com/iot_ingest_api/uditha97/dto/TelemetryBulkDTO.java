@@ -6,6 +6,12 @@ import lombok.Data;
 
 import java.util.List;
 import java.util.Map;
+
+/**
+ * Data Transfer Object for bulk telemetry payloads.
+ * Represents telemetry data sent by IoT devices in bulk format.
+ */
+
 @Data
 @Schema(name = "TelemetryBulk", description = "Bulk telemetry payload sent by devices")
 public class TelemetryBulkDTO {

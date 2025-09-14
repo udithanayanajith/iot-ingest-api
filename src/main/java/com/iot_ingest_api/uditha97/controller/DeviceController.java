@@ -2,7 +2,6 @@ package com.iot_ingest_api.uditha97.controller;
 
 import com.iot_ingest_api.uditha97.business.DeviceBusinessService;
 import com.iot_ingest_api.uditha97.model.Device;
-import com.iot_ingest_api.uditha97.repository.DeviceRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,6 +13,10 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * REST controller for device management operations.
+ * Provides endpoints for device registration and retrieval.
+ */
 @Tag(name = "Device Management", description = "Endpoints for device registration and retrieval")
 @RestController
 @RequestMapping("/api/v1/devices")
@@ -23,6 +26,13 @@ public class DeviceController {
     public DeviceController(DeviceBusinessService deviceBusinessService) {
         this.deviceBusinessService = deviceBusinessService;
     }
+
+    /**
+     * Endpoint for registering a new IoT device.
+     *
+     * @param device the device object to register
+     * @return ResponseEntity with the created device
+     */
     @Operation(summary = "Register a new device",
             description = "Registers a new IoT device in the system and " +
                     "returns the created device with generated ID")
@@ -39,6 +49,12 @@ public class DeviceController {
         return ResponseEntity.ok(deviceBusinessService.registerDevice(device));
     }
 
+    /**
+     * Endpoint for retrieving device information by ID.
+     *
+     * @param deviceId the unique device identifier
+     * @return ResponseEntity with device if found, 404 otherwise
+     */
     @Operation(summary = "Get device by ID",
             description = "Retrieves device information by its unique device identifier")
     @ApiResponses({@ApiResponse(responseCode = "200",
