@@ -137,4 +137,6 @@ The service exposes metrics via Micrometer that can be scraped by Prometheus:
 
 **Note:** Ensure that Kafka and MySQL are running before starting the application.
 
-[IoT Data Processing System Comprehensive Documentation.pdf](Extra%20Things/IoT Data Processing System Comprehensive Documentation.pdf)
+Read the demonstration document for more..
+
+[IoT Data Processing System Comprehensive Documentation.pdf](Extra%20Things/IoT%20Data%20Processing%20System%20Comprehensive%20Documentation.pdf)
